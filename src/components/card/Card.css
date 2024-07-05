@@ -19,4 +19,9 @@
  .more__btn{
   margin-right: 0 !important;
  }
+ .debts__card--btn,.transaction__card--btn{
+  display: flex ;
+  flex-direction: column;
+  gap: 20px;
+ }
 }
