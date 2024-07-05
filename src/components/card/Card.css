@@ -1,0 +1,27 @@
+.home__alert{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+@media screen and (max-width:800px){
+  .home__alert{
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+@media screen and (max-width:450px){
+ .buttons__home{
+   flex-direction: column;
+   gap: 10px;
+   align-items:center;
+   width: 100%;
+ }
+ .home__row{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+ }
+ .more__btn{
+  margin-right: 0 !important;
+ }
+}
