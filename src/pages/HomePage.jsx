@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import HomeCard from '../components/card/HomeCard'
 import { Button, Form, Modal } from 'react-bootstrap';
 
-const HomePage = ({ totalAmounts,validated,show,handleClose,handleShow,handleSubmit,totalAmount,handleAmount,editAmount,selected,deleteAmount,handleSearch,search}) => {
+const HomePage = ({ totalAmounts,validated,show,handleClose,handleShow,handleSubmit,totalAmount,handleAmount,editAmount,selected,deleteAmount,handleSearch,search,unPaidAmount,paidAmount}) => {
 
   let filteredAmounts=totalAmounts.filter((totalAmount)=>totalAmount.name.toLowerCase().includes(search))
   return (
@@ -16,7 +16,7 @@ const HomePage = ({ totalAmounts,validated,show,handleClose,handleShow,handleSub
             <button className="btn btn-outline-secondary" onClick={handleShow} type="button">Add</button>
           </div>
 
-          {filteredAmounts.length >0 ? filteredAmounts.map((totalAmount) => <HomeCard key={totalAmount.id} {...totalAmount } deleteAmount={deleteAmount} editAmount={editAmount} />)
+          {filteredAmounts.length >0 ? filteredAmounts.map((totalAmount) => <HomeCard key={totalAmount.id} {...totalAmount } paidAmount={paidAmount} unPaidAmount={unPaidAmount} deleteAmount={deleteAmount} editAmount={editAmount} />)
           :
           <h2 className='text-center py-5'>Sorry, no person with that name was found</h2>
           }

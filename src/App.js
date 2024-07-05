@@ -13,7 +13,7 @@ const DebtsPage = lazy(() => import("./pages/DebtsPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 
 function App() {
-  const [search,setSearch]=useState("");
+  const [search, setSearch] = useState("");
   const [selected, setSelected] = useState(null);
   const [show, setShow] = useState(false);
   const [validated, setValidated] = useState(false);
@@ -40,9 +40,18 @@ function App() {
       id: "3",
       name: "Nodir",
       deadline: "2018-10-11",
-      amount: 1000,
+      amount: 3000,
       phone: "+998 77 888 99 00",
       desc: "Xoliyorov Nodir Aliyor o'g'li",
+      paid: false,
+    },
+    {
+      id: "4",
+      name: "Alisher",
+      deadline: "2028-10-11",
+      amount: 4000,
+      phone: "+998 77 777 99 00",
+      desc: "Soliyev Alisher Sobir o'g'li",
       paid: false,
     },
   ]);
@@ -124,8 +133,39 @@ function App() {
     }
   };
 
-  const handleSearch=(e)=>{
-    setSearch(e.target.value.trim().toLowerCase())
+  const handleSearch = (e) => {
+    setSearch(e.target.value.trim().toLowerCase());
+  };
+
+  const unPaidAmount = (id) => {
+    let newAmount = totalAmounts.find((totalAmount) => totalAmount.id === id);
+    if(newAmount){
+      setTotalAmounts(totalAmounts.map((totalAmount)=>totalAmount.id===id ? {...totalAmount ,paid:true} : totalAmount))
+    }
+  };
+
+  const paidAmount=(id)=>{
+    let newAmount=totalAmounts.find((totalAmount)=>totalAmount.id === id)
+    if(newAmount){
+      setTotalAmounts(totalAmounts.map((totalAmount)=>totalAmount.id === id ? {...totalAmount,paid:false}: totalAmount));
+    }
+  }
+
+  const deleteTransaction=(id)=>{
+    let isDelete = window.confirm("Are you sure you want to delete this transaction?");
+    if(isDelete){
+      let newAmount=totalAmounts.filter((amount)=>amount.id !== id);
+      setTotalAmounts(newAmount);
+      toast.success("Transaction deleted successfully");
+    }
+  }
+  const deleteDebt=(id)=>{
+    let isDelete = window.confirm("Are you sure you want to delete this debtor?");
+    if(isDelete){
+      let newAmount=totalAmounts.filter((totalAmount)=>totalAmount.id !== id);
+      setTotalAmounts(newAmount);
+      toast.success("Debtor deleted successfully");
+    }
   }
   return (
     <Suspense fallback={<Loading />}>
@@ -151,12 +191,20 @@ function App() {
                   deleteAmount={deleteAmount}
                   handleSearch={handleSearch}
                   search={search}
+                  unPaidAmount={unPaidAmount}
+                  paidAmount={paidAmount}
                 />
               }
             />
-            <Route path="home/:homeId" element={<HomeMorePage totalAmounts={totalAmounts} />} />
-            <Route path="transaction" element={<TransactionsPage />} />
-            <Route path="debts" element={<DebtsPage />} />
+            <Route
+              path="home/:homeId"
+              element={<HomeMorePage totalAmounts={totalAmounts} />}
+            />
+            <Route
+              path="transaction"
+              element={<TransactionsPage deleteTransaction={deleteTransaction} totalAmounts={totalAmounts} />}
+            />
+            <Route path="debts" element={<DebtsPage deleteDebt={deleteDebt} totalAmounts={totalAmounts} />} />
           </Route>
         </Routes>
       </BrowserRouter>

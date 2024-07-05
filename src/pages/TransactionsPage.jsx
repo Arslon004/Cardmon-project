@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import TransactionCard from '../components/card/TransactionCard';
 
-const TransactionsPage = () => {
+const TransactionsPage = ({totalAmounts,deleteTransaction}) => {
+  let paidAmounts=totalAmounts.filter((totalAmount)=>totalAmount.paid);
   return (
-    <div>TransactionsPage</div>
+    <Fragment>
+      <section>
+        <div className="container">
+          <h2>TransactionsPage</h2>
+          {paidAmounts.map((paidAmount)=><TransactionCard deleteTransaction={deleteTransaction} key={paidAmount.id} {...paidAmount}/>)}
+        </div>
+      </section>
+    </Fragment>
   )
 }
 
