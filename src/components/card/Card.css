@@ -13,8 +13,10 @@
  .buttons__home{
    flex-direction: column;
    gap: 10px;
-   align-items:flex-start;
+   align-items:flex-end;
    width: 100%;
  }
-
+ .more__btn{
+  margin-right: 0 !important;
+ }
 }
