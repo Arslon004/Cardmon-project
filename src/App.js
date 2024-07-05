@@ -3,12 +3,15 @@ import { v4 } from "uuid";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Loading from "./components/loading/Loading";
 import { toast } from "react-toastify";
+import DebtsMorePage from "./pages/DebtsMorePage";
 
 const Layout = lazy(() => import("./components/layout"));
 const HomePage = lazy(() => import("./pages/HomePage"));
 const HomeMorePage = lazy(() => import("./pages/HomeMorePage"));
 
 const TransactionsPage = lazy(() => import("./pages/TransactionsPage"));
+const TransactionMorePage = lazy(() => import("./pages/TransactionMorePage"));
+
 const DebtsPage = lazy(() => import("./pages/DebtsPage"));
 const LoginPage = lazy(() => import("./pages/LoginPage"));
 
@@ -18,50 +21,52 @@ function App() {
   const [show, setShow] = useState(false);
   const [validated, setValidated] = useState(false);
   const [totalAmounts, setTotalAmounts] = useState(() => {
-    const savedAmounts = localStorage.getItem('totalAmounts');
-    return savedAmounts ? JSON.parse(savedAmounts) : [
-      {
-        id: "1",
-        name: "Arslon",
-        deadline: "2023-09-21",
-        amount: 1000,
-        phone: "+998 88 100 79 82",
-        desc: "Arslon Bozorov Nurbobo o'g'li",
-        paid: true,
-      },
-      {
-        id: "2",
-        name: "G'afur",
-        deadline: "2022-09-28",
-        amount: 2000,
-        phone: "+998 88 100 88 99",
-        desc: "G'afur Valiyev Sobir o'g'li",
-        paid: false,
-      },
-      {
-        id: "3",
-        name: "Nodir",
-        deadline: "2018-10-11",
-        amount: 3000,
-        phone: "+998 77 888 99 00",
-        desc: "Xoliyorov Nodir Aliyor o'g'li",
-        paid: false,
-      },
-      {
-        id: "4",
-        name: "Alisher",
-        deadline: "2028-10-11",
-        amount: 4000,
-        phone: "+998 77 777 99 00",
-        desc: "Soliyev Alisher Sobir o'g'li",
-        paid: false,
-      },
-    ];
+    const savedAmounts = localStorage.getItem("totalAmounts");
+    return savedAmounts
+      ? JSON.parse(savedAmounts)
+      : [
+          {
+            id: "1",
+            name: "Arslon",
+            deadline: "2023-09-21",
+            amount: 1000,
+            phone: "+998 88 100 79 82",
+            desc: "Arslon Bozorov Nurbobo o'g'li",
+            paid: true,
+          },
+          {
+            id: "2",
+            name: "G'afur",
+            deadline: "2022-09-28",
+            amount: 2000,
+            phone: "+998 88 100 88 99",
+            desc: "G'afur Valiyev Sobir o'g'li",
+            paid: false,
+          },
+          {
+            id: "3",
+            name: "Nodir",
+            deadline: "2018-10-11",
+            amount: 3000,
+            phone: "+998 77 888 99 00",
+            desc: "Xoliyorov Nodir Aliyor o'g'li",
+            paid: false,
+          },
+          {
+            id: "4",
+            name: "Alisher",
+            deadline: "2028-10-11",
+            amount: 4000,
+            phone: "+998 77 777 99 00",
+            desc: "Soliyev Alisher Sobir o'g'li",
+            paid: false,
+          },
+        ];
   });
 
-  useEffect(()=>{
-    localStorage.setItem('totalAmounts',JSON.stringify(totalAmounts))
-  },[totalAmounts]);
+  useEffect(() => {
+    localStorage.setItem("totalAmounts", JSON.stringify(totalAmounts));
+  }, [totalAmounts]);
 
   const [totalAmount, setTotalAmount] = useState({
     name: "",
@@ -148,7 +153,9 @@ function App() {
   const unPaidAmount = (id) => {
     let newAmount = totalAmounts.find((totalAmount) => totalAmount.id === id);
     if (newAmount) {
-      const isConfirmed = window.confirm("Are you sure you want to mark this amount as unpaid?");
+      const isConfirmed = window.confirm(
+        "Are you sure you want to mark this amount as unpaid?"
+      );
       if (isConfirmed) {
         setTotalAmounts(
           totalAmounts.map((totalAmount) =>
@@ -160,15 +167,18 @@ function App() {
     }
   };
 
-
   const paidAmount = (id) => {
     let newAmount = totalAmounts.find((totalAmount) => totalAmount.id === id);
     if (newAmount) {
-      const isConfirmed = window.confirm("Are you sure you want to mark this amount as unpaid?");
+      const isConfirmed = window.confirm(
+        "Are you sure you want to mark this amount as unpaid?"
+      );
       if (isConfirmed) {
         setTotalAmounts(
           totalAmounts.map((totalAmount) =>
-            totalAmount.id === id ? { ...totalAmount, paid: false } : totalAmount
+            totalAmount.id === id
+              ? { ...totalAmount, paid: false }
+              : totalAmount
           )
         );
         toast.success("Amount marked as unpaid successfully!");
@@ -176,23 +186,28 @@ function App() {
     }
   };
 
-
-  const deleteTransaction=(id)=>{
-    let isDelete = window.confirm("Are you sure you want to delete this transaction?");
-    if(isDelete){
-      let newAmount=totalAmounts.filter((amount)=>amount.id !== id);
+  const deleteTransaction = (id) => {
+    let isDelete = window.confirm(
+      "Are you sure you want to delete this transaction?"
+    );
+    if (isDelete) {
+      let newAmount = totalAmounts.filter((amount) => amount.id !== id);
       setTotalAmounts(newAmount);
       toast.success("Transaction deleted successfully");
     }
-  }
-  const deleteDebt=(id)=>{
-    let isDelete = window.confirm("Are you sure you want to delete this debtor?");
-    if(isDelete){
-      let newAmount=totalAmounts.filter((totalAmount)=>totalAmount.id !== id);
+  };
+  const deleteDebt = (id) => {
+    let isDelete = window.confirm(
+      "Are you sure you want to delete this debtor?"
+    );
+    if (isDelete) {
+      let newAmount = totalAmounts.filter(
+        (totalAmount) => totalAmount.id !== id
+      );
       setTotalAmounts(newAmount);
       toast.success("Debtor deleted successfully");
     }
-  }
+  };
   return (
     <Suspense fallback={<Loading />}>
       <BrowserRouter>
@@ -228,9 +243,24 @@ function App() {
             />
             <Route
               path="transaction"
-              element={<TransactionsPage deleteTransaction={deleteTransaction} totalAmounts={totalAmounts} />}
+              element={
+                <TransactionsPage
+                  deleteTransaction={deleteTransaction}
+                  totalAmounts={totalAmounts}
+                />
+              }
             />
-            <Route path="debts" element={<DebtsPage deleteDebt={deleteDebt} totalAmounts={totalAmounts} />} />
+            <Route path="transaction/:transactionId" element={<TransactionMorePage totalAmounts={totalAmounts}/>}/>
+            <Route
+              path="debts"
+              element={
+                <DebtsPage
+                  deleteDebt={deleteDebt}
+                  totalAmounts={totalAmounts}
+                />
+              }
+            />
+            <Route path="debts/:debtsId" element={<DebtsMorePage totalAmounts={totalAmounts}/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

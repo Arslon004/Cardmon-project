@@ -1,6 +1,7 @@
 import React from 'react'
 
 import "./Card.css"
+import { Link } from 'react-router-dom'
 const DebtsCard = ({name,deadline,desc,amount,phone,paid,id,deleteDebt}) => {
   return (
     <div className='alert alert-danger debts__card'>
@@ -9,7 +10,7 @@ const DebtsCard = ({name,deadline,desc,amount,phone,paid,id,deleteDebt}) => {
         <p>{phone} <span className='badge bg-dark'>{deadline}</span></p>
       </div>
       <div>
-        {/* <button className='btn btn-primary me-3' >Unpaid</button> */}
+        <Link to={`/debts/${id}`} className='btn btn-primary me-3' >More...</Link>
         <button className='btn btn-danger' onClick={()=>deleteDebt(id)}>Delete</button>
       </div>
     </div>
