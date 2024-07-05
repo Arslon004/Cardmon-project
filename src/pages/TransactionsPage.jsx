@@ -7,7 +7,7 @@ const TransactionsPage = ({totalAmounts,deleteTransaction}) => {
     <Fragment>
       <section>
         <div className="container">
-          <h2>TransactionsPage</h2>
+          <h2 className='text-center my-4 text-success'>People who have paid their debts ({paidAmounts.length})</h2>
           {paidAmounts.map((paidAmount)=><TransactionCard deleteTransaction={deleteTransaction} key={paidAmount.id} {...paidAmount}/>)}
         </div>
       </section>

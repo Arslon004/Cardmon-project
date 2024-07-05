@@ -11,7 +11,7 @@ const HomeMorePage = ({ totalAmounts }) => {
   }
 
   return (
-    <div className="d-flex justify-content-center align-items-center bg-secondary" style={{ height: '100vh'}}>
+    <div className="d-flex justify-content-center align-items-center bg-dark" style={{ height: '100vh'}}>
     <Card style={{ width: '40rem',padding:"20px" }}>
       <Card.Body>
         <Card.Title style={{fontSize:"30px",fontWeight:"700",color:"blue",marginTop:"20px",marginBottom:"20px"}}>{amount.name}</Card.Title>

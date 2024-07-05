@@ -9,7 +9,7 @@ const HomePage = ({ totalAmounts,validated,show,handleClose,handleShow,handleSub
     <Fragment>
       <section>
         <div className="container">
-          <h2 className='text-center my-3 text-success'>HomePage</h2>
+          <h2 className='text-center my-3 text-success'>Total people ({filteredAmounts.length})</h2>
 
           <div className="input-group my-4">
             <input value={search} onChange={handleSearch} type="text" className="form-control " placeholder="Searching..." />

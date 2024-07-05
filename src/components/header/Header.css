@@ -1,0 +1,12 @@
+header{
+  position: sticky;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+}
+.nav-link.active{
+  color: #000 !important;
+}
+.nav-link{
+  font-size: 25px;
+}

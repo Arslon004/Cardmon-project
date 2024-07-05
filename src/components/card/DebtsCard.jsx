@@ -3,7 +3,7 @@ import React from 'react'
 import "./Card.css"
 const DebtsCard = ({name,deadline,desc,amount,phone,paid,id,deleteDebt}) => {
   return (
-    <div className='alert alert-success debts__card'>
+    <div className='alert alert-danger debts__card'>
       <div>
         <h2>{name} <span className='badge bg-success'>{amount} $</span></h2>
         <p>{phone} <span className='badge bg-dark'>{deadline}</span></p>

@@ -1,4 +1,4 @@
-import { Suspense, lazy, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { v4 } from "uuid";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Loading from "./components/loading/Loading";
@@ -17,44 +17,52 @@ function App() {
   const [selected, setSelected] = useState(null);
   const [show, setShow] = useState(false);
   const [validated, setValidated] = useState(false);
-  const [totalAmounts, setTotalAmounts] = useState([
-    {
-      id: "1",
-      name: "Arslon",
-      deadline: "2023-09-21",
-      amount: 1000,
-      phone: "+998 88 100 79 82",
-      desc: "Arslon Bozorov Nurbobo o'g'li",
-      paid: true,
-    },
-    {
-      id: "2",
-      name: "G'afur",
-      deadline: "2022-09-28",
-      amount: 2000,
-      phone: "+998 88 100 88 99",
-      desc: "G'afur Valiyev Sobir o'g'li",
-      paid: false,
-    },
-    {
-      id: "3",
-      name: "Nodir",
-      deadline: "2018-10-11",
-      amount: 3000,
-      phone: "+998 77 888 99 00",
-      desc: "Xoliyorov Nodir Aliyor o'g'li",
-      paid: false,
-    },
-    {
-      id: "4",
-      name: "Alisher",
-      deadline: "2028-10-11",
-      amount: 4000,
-      phone: "+998 77 777 99 00",
-      desc: "Soliyev Alisher Sobir o'g'li",
-      paid: false,
-    },
-  ]);
+  const [totalAmounts, setTotalAmounts] = useState(() => {
+    const savedAmounts = localStorage.getItem('totalAmounts');
+    return savedAmounts ? JSON.parse(savedAmounts) : [
+      {
+        id: "1",
+        name: "Arslon",
+        deadline: "2023-09-21",
+        amount: 1000,
+        phone: "+998 88 100 79 82",
+        desc: "Arslon Bozorov Nurbobo o'g'li",
+        paid: true,
+      },
+      {
+        id: "2",
+        name: "G'afur",
+        deadline: "2022-09-28",
+        amount: 2000,
+        phone: "+998 88 100 88 99",
+        desc: "G'afur Valiyev Sobir o'g'li",
+        paid: false,
+      },
+      {
+        id: "3",
+        name: "Nodir",
+        deadline: "2018-10-11",
+        amount: 3000,
+        phone: "+998 77 888 99 00",
+        desc: "Xoliyorov Nodir Aliyor o'g'li",
+        paid: false,
+      },
+      {
+        id: "4",
+        name: "Alisher",
+        deadline: "2028-10-11",
+        amount: 4000,
+        phone: "+998 77 777 99 00",
+        desc: "Soliyev Alisher Sobir o'g'li",
+        paid: false,
+      },
+    ];
+  });
+
+  useEffect(()=>{
+    localStorage.setItem('totalAmounts',JSON.stringify(totalAmounts))
+  },[totalAmounts]);
+
   const [totalAmount, setTotalAmount] = useState({
     name: "",
     deadline: "",
@@ -139,17 +147,35 @@ function App() {
 
   const unPaidAmount = (id) => {
     let newAmount = totalAmounts.find((totalAmount) => totalAmount.id === id);
-    if(newAmount){
-      setTotalAmounts(totalAmounts.map((totalAmount)=>totalAmount.id===id ? {...totalAmount ,paid:true} : totalAmount))
+    if (newAmount) {
+      const isConfirmed = window.confirm("Are you sure you want to mark this amount as unpaid?");
+      if (isConfirmed) {
+        setTotalAmounts(
+          totalAmounts.map((totalAmount) =>
+            totalAmount.id === id ? { ...totalAmount, paid: true } : totalAmount
+          )
+        );
+        toast.success("Amount marked as unpaid successfully!");
+      }
     }
   };
 
-  const paidAmount=(id)=>{
-    let newAmount=totalAmounts.find((totalAmount)=>totalAmount.id === id)
-    if(newAmount){
-      setTotalAmounts(totalAmounts.map((totalAmount)=>totalAmount.id === id ? {...totalAmount,paid:false}: totalAmount));
+
+  const paidAmount = (id) => {
+    let newAmount = totalAmounts.find((totalAmount) => totalAmount.id === id);
+    if (newAmount) {
+      const isConfirmed = window.confirm("Are you sure you want to mark this amount as unpaid?");
+      if (isConfirmed) {
+        setTotalAmounts(
+          totalAmounts.map((totalAmount) =>
+            totalAmount.id === id ? { ...totalAmount, paid: false } : totalAmount
+          )
+        );
+        toast.success("Amount marked as unpaid successfully!");
+      }
     }
-  }
+  };
+
 
   const deleteTransaction=(id)=>{
     let isDelete = window.confirm("Are you sure you want to delete this transaction?");

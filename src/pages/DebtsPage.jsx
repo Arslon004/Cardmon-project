@@ -7,7 +7,7 @@ const DebtsPage = ({totalAmounts,deleteDebt}) => {
     <Fragment>
       <section>
         <div className="container">
-          <h2>DebtsPage</h2>
+          <h2 className='text-center my-4 text-success'>People who have not paid their debts ({debters.length})</h2>
           {debters.map((debt)=><DebtsCard deleteDebt={deleteDebt} key={debt.id} {...debt}/>)}
         </div>
       </section>
