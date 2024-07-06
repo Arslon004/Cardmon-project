@@ -208,6 +208,44 @@ function App() {
       toast.success("Debtor deleted successfully");
     }
   };
+
+  const unPaidTransaction = (id) => {
+    let newAmount = totalAmounts.find((totalAmount) => totalAmount.id === id);
+    if (newAmount) {
+      const isConfirmed = window.confirm(
+        "Are you sure you want to mark this transaction as unpaid?"
+      );
+      if (isConfirmed) {
+        setTotalAmounts(
+          totalAmounts.map((totalAmount) =>
+            totalAmount.id === id
+              ? { ...totalAmount, paid: false }
+              : totalAmount
+          )
+        );
+        toast.success("Transaction marked as unpaid successfully!");
+      }
+    }
+  };
+
+  const paidDebt = (id) => {
+    let newAmount = totalAmounts.find((totalAmount) => totalAmount.id === id);
+    if (newAmount) {
+      const isConfirmed = window.confirm(
+        "Are you sure you want to mark this transaction as paid?"
+      );
+      if (isConfirmed) {
+        setTotalAmounts(
+          totalAmounts.map((totalAmount) =>
+            totalAmount.id === id ? { ...totalAmount, paid: true } : totalAmount
+          )
+        );
+        toast.success("Transaction marked as paid successfully!");
+      }
+    }
+  };
+
+
   return (
     <Suspense fallback={<Loading />}>
       <BrowserRouter>
@@ -247,20 +285,28 @@ function App() {
                 <TransactionsPage
                   deleteTransaction={deleteTransaction}
                   totalAmounts={totalAmounts}
+                  unPaidTransaction={unPaidTransaction}
                 />
               }
             />
-            <Route path="transaction/:transactionId" element={<TransactionMorePage totalAmounts={totalAmounts}/>}/>
+            <Route
+              path="transaction/:transactionId"
+              element={<TransactionMorePage totalAmounts={totalAmounts} />}
+            />
             <Route
               path="debts"
               element={
                 <DebtsPage
                   deleteDebt={deleteDebt}
                   totalAmounts={totalAmounts}
+                  paidDebt={paidDebt}
                 />
               }
             />
-            <Route path="debts/:debtsId" element={<DebtsMorePage totalAmounts={totalAmounts}/>}/>
+            <Route
+              path="debts/:debtsId"
+              element={<DebtsMorePage totalAmounts={totalAmounts} />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

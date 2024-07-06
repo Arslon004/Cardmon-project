@@ -7,9 +7,9 @@ import "./Header.css";
 
 const Header = () => {
 
-  const [isMenuOpen,setIsMenuOpen]=useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMenu=()=>{
+  const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen)
   }
   return (
@@ -42,7 +42,7 @@ const Header = () => {
             <NavLink className="nav-link--responsive text-info" to="/debts" onClick={toggleMenu}>Debts</NavLink>
           </li>
         </ul>
-        <button onClick={toggleMenu}  className='close__btn' >
+        <button onClick={toggleMenu} className='close__btn' >
           <img src={close} alt="close" />
         </button>
       </nav>

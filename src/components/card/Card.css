@@ -8,6 +8,14 @@
     flex-direction: column;
     gap: 30px;
   }
+  .more__btn{
+    margin-right: 0 !important;
+   }
+  .debts__card--btn,.transaction__card--btn{
+    display: flex ;
+    flex-direction: column;
+    gap: 20px;
+   }
 }
 @media screen and (max-width:450px){
  .buttons__home{
@@ -16,12 +24,6 @@
    align-items:flex-end;
    width: 100%;
  }
- .more__btn{
-  margin-right: 0 !important;
- }
- .debts__card--btn,.transaction__card--btn{
-  display: flex ;
-  flex-direction: column;
-  gap: 20px;
- }
+
+
 }
