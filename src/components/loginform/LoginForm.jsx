@@ -9,6 +9,7 @@ const LoginForm = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [register, setRegister] = useState(true);
 
   const storedUsername = JSON.parse(localStorage.getItem('username')) || null;
   const storedPassword = JSON.parse(localStorage.getItem('password')) || null;
@@ -33,11 +34,21 @@ const LoginForm = () => {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    localStorage.setItem('username', JSON.stringify(username));
-    localStorage.setItem('password', JSON.stringify(password));
-    toast.success("User registered successfully");
+    if(register){
+      toast.error("Already registered");
+    }
+    else{
+      localStorage.setItem('username', JSON.stringify(username));
+      localStorage.setItem('password', JSON.stringify(password));
+      setRegister(true)
+      navigate('/home')
+      toast.success("User registered successfully");
+    }
   }
 
+  const forgotPassword=()=>{
+    setRegister(false);
+  }
   return (
     <div className="login__page">
       <div className='wrapper'>
@@ -56,7 +67,7 @@ const LoginForm = () => {
 
           <div className="remember-forgot">
             <label><input type="checkbox" />Remember me</label>
-            <a href="#">Forgot password?</a>
+            <a onClick={forgotPassword} href="#">Forgot password?</a>
           </div>
 
           <button type='submit'>Login</button>
