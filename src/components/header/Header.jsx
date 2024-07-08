@@ -20,10 +20,10 @@ const Header = () => {
             <NavLink className="nav-link text-white" to="/home">Home</NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link text-white" to="/transaction">Transaction</NavLink>
+            <NavLink className="nav-link text-white" to="/transaction">Unpaid</NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link text-white" to="/debts" >Debts</NavLink>
+            <NavLink className="nav-link text-white" to="/debts" >Paid</NavLink>
           </li>
         </ul>
         <button className='hamburger' onClick={toggleMenu} >

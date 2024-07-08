@@ -245,7 +245,6 @@ function App() {
     }
   };
 
-
   return (
     <Suspense fallback={<Loading />}>
       <BrowserRouter>
